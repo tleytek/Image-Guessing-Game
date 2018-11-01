@@ -1,7 +1,14 @@
 [
 	{
-		"id": 1,
-		"name": "quefrequency",
-		"image": "https://i.redd.it/d3rpghkhdzu11.jpg"
+		"name": "quefrequency"
+	},
+	{
+		"name": "test1"
+	},
+	{
+		"name": "test2"
+	},
+	{
+		"name": "test3"
 	}
 ]
