@@ -1,95 +1,87 @@
-import React, { Component } from "react";
-import "./App.css";
-import images from "./images.json";
-// import Wrapper from
-import ImageDisplay from "./components/ImageDisplay";
-import Log from "./Log";
-
+import React, { Component } from 'react';
+import './App.css';
+import images from './images.json';
+import ImageDisplay from './components/ImageDisplay';
 class App extends Component {
-	// Setting this.state.images to the images json array
-	state = {
-		images,
-		imagesClicked: [],
-		score: 0,
-		highScore: 0
-	};
+  state = {
+    images,
+    imagesClicked: [],
+    score: 0,
+    highScore: 0
+  };
 
-	checkDuplicate = event => {
-		const imagesClicked = this.state.imagesClicked;
-		let imageClicked = event.target.id;
-		console.log(imageClicked);
+  checkDuplicate = event => {
+    const imagesClicked = this.state.imagesClicked;
+    let imageClicked = event.target.id;
 
-		// I don't know why I wasn't seeing how this is still modifying state directly
-		// let newStateArray = imagesClicked.push(imageClicked);
-		// ^^^^^^^^^^^^^^^ BAD ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    if (imagesClicked.indexOf(imageClicked) === -1) {
+      this.setState({
+        imagesClicked: [...imagesClicked, imageClicked],
+        score: this.state.score + 1
+      });
+      this.randomizeImages();
+    } else {
+      this.restartGame();
+      this.randomizeImages();
+    }
+  };
 
-		if (imagesClicked.indexOf(imageClicked) === -1) {
-			this.setState({
-				//I saw an example for how to add to a state array on stackoverflow and
-				//kept trying it thinking the triple dot that was in the commenters solution
-				// was just there way of saying "theres previous stuff here" but its
-				//actually something called spread operator?
-				imagesClicked: [...imagesClicked, imageClicked],
-				score: this.state.score + 1
-			});
-			Log.info("good", "App Component");
-			this.randomizeImages();
-		} else {
-			Log.info("bad", "App Component");
-			this.restartGame();
-			this.randomizeImages();
-		}
-	};
+  checkHighScore = () => {
+    if (this.state.score > this.state.highScore) {
+      this.setState({
+        highScore: this.state.score
+      });
+    }
+  };
 
-	checkHighScore = () => {
-		if (this.state.score > this.state.highScore) {
-			this.setState({
-				highScore: this.state.score
-			});
-		}
-	};
+  restartGame = () => {
+    this.checkHighScore();
+    this.setState({
+      score: 0,
+      imagesClicked: []
+    });
+  };
 
-	restartGame = () => {
-		this.checkHighScore();
-		this.setState({
-			score: 0,
-			imagesClicked: []
-		});
-	};
+  componentDidMount() {
+    this.randomizeImages();
+  }
 
-	// Cool, this executes the randomize array on page refresh AKA componentDidMount()
-	componentDidMount() {
-		this.randomizeImages();
-	}
+  randomizeImages = () => {
+    const images = this.state.images.sort((a, b) => {
+      return 0.5 - Math.random();
+    });
+    this.setState({ images: images });
+  };
 
-	randomizeImages = () => {
-		// Randomize this.state.images with images
-		const images = this.state.images.sort((a, b) => {
-			return 0.5 - Math.random();
-		});
+  render() {
+    return (
+      <div>
+        <nav className="container-fluid sticky-top py-3 bg-dark text-light">
+          <div className="row">
+            <h2 className="col text-center font-weight-bold">Keeb Game</h2>
+            <h2 className="col text-center font-weight-light">Click an Image to begin!</h2>
+            <h2 className="col text-center font-weight-light">
+              Score: {this.state.score} | Highest Score: {this.state.highScore}
+            </h2>
+          </div>
+        </nav>
 
-		this.setState({ images: images });
-	};
+        <header className="container-fluid">
+          <div className="row justify-content-center align-content-center py-5 bg-primary" style={{ height: '35vh' }}>
+            <h1>Keyboard Guessing Game!</h1>
+          </div>
+        </header>
 
-	render() {
-		return (
-			<div>
-				<p>{this.state.score}</p>
-
-				{/* {this.state.imagesClicked.map(element => (
-					<p>{element}</p>
-				))} */}
-
-				{this.state.images.map(image => (
-					<ImageDisplay
-						key={image.name}
-						name={image.name}
-						checkDuplicate={this.checkDuplicate}
-					/>
-				))}
-			</div>
-		);
-	}
+        <main className="container">
+          <div className="row">
+            {this.state.images.map(image => (
+              <ImageDisplay key={image.name} name={image.name} checkDuplicate={this.checkDuplicate} />
+            ))}
+          </div>
+        </main>
+      </div>
+    );
+  }
 }
 
 export default App;
