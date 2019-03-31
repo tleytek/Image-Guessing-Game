@@ -10,6 +10,9 @@ class App extends Component {
     highScore: 0
   };
 
+  componentDidMount() {
+    this.randomizeImages();
+  }
   checkDuplicate = event => {
     const imagesClicked = this.state.imagesClicked;
     let imageClicked = event.target.id;
@@ -42,10 +45,6 @@ class App extends Component {
     });
   };
 
-  componentDidMount() {
-    this.randomizeImages();
-  }
-
   randomizeImages = () => {
     const images = this.state.images.sort((a, b) => {
       return 0.5 - Math.random();
@@ -68,15 +67,22 @@ class App extends Component {
 
         <header className="container-fluid">
           <div className="row justify-content-center align-content-center py-5 bg-primary" style={{ height: '35vh' }}>
-            <h1>Keyboard Guessing Game!</h1>
+            <h1>Keyboard Memory Game!</h1>
           </div>
         </header>
 
         <main className="container">
-          <div className="row">
-            {this.state.images.map(image => (
-              <ImageDisplay key={image.name} name={image.name} checkDuplicate={this.checkDuplicate} />
-            ))}
+          <div className="row" style={{ height: '90vh' }}>
+            {this.state.images.map(image => {
+              return (
+                <ImageDisplay
+                  key={image.name}
+                  name={image.name}
+                  imageUrl={image.imageUrl}
+                  checkDuplicate={this.checkDuplicate}
+                />
+              );
+            })}
           </div>
         </main>
       </div>
