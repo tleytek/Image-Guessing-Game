@@ -72,7 +72,7 @@ class App extends Component {
         </header>
 
         <main className="container">
-          <div className="row">
+          <div className="row" style={{ display: 'flex', justifyContent: 'space-evenly' }}>
             {this.state.images.map(image => {
               return (
                 <ImageDisplay
