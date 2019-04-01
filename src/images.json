@@ -12,10 +12,12 @@
     "imageUrl": "images/ergodox.jpg"
   },
   {
-    "name": "Let's Split"
+    "name": "Let's Split",
+    "imageUrl": "images/lets-split.jpg"
   },
   {
-    "name": "Minidox"
+    "name": "Minidox",
+    "imageUrl": "images/minidox.jpg"
   },
   {
     "name": "Fourier 40",

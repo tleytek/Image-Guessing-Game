@@ -72,7 +72,7 @@ class App extends Component {
         </header>
 
         <main className="container">
-          <div className="row" style={{ height: '90vh' }}>
+          <div className="row">
             {this.state.images.map(image => {
               return (
                 <ImageDisplay
