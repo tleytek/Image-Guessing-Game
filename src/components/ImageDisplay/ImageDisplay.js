@@ -17,7 +17,7 @@ class ImageDisplay extends React.Component {
     return (
       <div className="col-3 my-5 p-0 mx-2">
         <img
-          ctonClick={this.props.checkDuplicate}
+          onClick={this.props.checkDuplicate}
           id={this.props.name}
           src={this.props.imageUrl}
           alt={this.props.name}
@@ -33,13 +33,13 @@ class ImageDisplay extends React.Component {
 const styles = {
   imageStyle: {
     objectFit: 'cover',
-    width: '100%',
+    width: '90%',
     height: '100%',
     border: '5px solid grey',
     borderRadius: '10px'
   },
   hoverImageStyle: {
-    border: '10px solid orange'
+    transform: 'scale(1.05)'
   }
 };
 
